@@ -11,4 +11,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+    // CREAR METODO QUE CONSULTE EL API
+    // CREAR EL LIST VIEW PERSONALIZADO
+    // LLENAR LISTVIEW CON LOS DATOS DEL GET
+    // ABRIR FRAGMENT CUANDO SE SELECCIONE UN ELEMENTO
+
 }

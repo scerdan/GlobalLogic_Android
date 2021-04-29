@@ -3,7 +3,7 @@ package com.example.exercise.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Notebooks {
+public class NotebookModel {
     @SerializedName("title")
     @Expose
     private String title;

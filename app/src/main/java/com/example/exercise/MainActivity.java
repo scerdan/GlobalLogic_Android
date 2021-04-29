@@ -1,89 +1,62 @@
 package com.example.exercise;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.exercise.interfaces.Service;
-import com.example.exercise.models.Notebooks;
-import com.example.exercise.util.ConnectionRest;
+import com.example.exercise.models.NotebookModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainActivity extends AppCompatActivity {
-    // LLENAR LISTVIEW CON LOS DATOS DEL GET
-    // ABRIR FRAGMENT CUANDO SE SELECCIONE UN ELEMENTO
-    Retrofit retrofit;
-    TextView tv_Title;
-    TextView tv_SubTitle;
-    ImageView iv_Img;
-    ListView listadoView;
-
-    ArrayAdapter<String> arrayAdapter = null;
-    String[] BOX;
+    ArrayList<NotebookModel> notebookModels = new ArrayList<>();
+    private NotebookAdapter notebookAdapter;
+    private RecyclerView note_recyclerview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        listadoView = (ListView) findViewById(R.id.lv_listadoView);
-        tv_Title = (TextView) findViewById(R.id.tv_title);
-        tv_SubTitle = (TextView) findViewById(R.id.tv_SubTitle);
-        iv_Img = (ImageView) findViewById(R.id.iv_Img);
 
-
-        CallAPI();
+        note_recyclerview = (RecyclerView) findViewById(R.id.rv_Card);
+        note_recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        getNotebooksResponse();
     }
 
-    private void CallAPI() {
-        Service service = ConnectionRest.getConnetion().create(Service.class);
+    private void getNotebooksResponse() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://private-f0eea-mobilegllatam.apiary-mock.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        Call<List<Notebooks>> listado = service.obtenerListado();
-        listado.enqueue(new Callback<List<Notebooks>>() {
+        Service service = retrofit.create(Service.class);
+        Call<List<NotebookModel>> call = service.obtenerListado();
+
+        call.enqueue(new Callback<List<NotebookModel>>() {
             @Override
-            public void onResponse(Call<List<Notebooks>> call, Response<List<Notebooks>> response) {
-                Log.i("200", "200");
-                List<Notebooks> listado = response.body();
-
-                for (int i = 0; i < listado.size(); i++) {
-                    String name = listado.get(i).getTitle();
-                    String desc = listado.get(i).getDescription();
-                    String img = listado.get(i).getImage();
-
-                    BOX = new String[]{name, desc, img};
-
-//                    Log.i("ver", String.valueOf(listado));
-                    Log.i("box", Arrays.toString(BOX));
-//                    System.out.println(itemsName);
-                }
-                cargarADAPTER();
-
+            public void onResponse(Call<List<NotebookModel>> call, Response<List<NotebookModel>> response) {
+                notebookModels = new ArrayList<>(response.body());
+                notebookAdapter = new NotebookAdapter(MainActivity.this, notebookModels);
+                note_recyclerview.setAdapter(notebookAdapter);
+                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onFailure(Call<List<Notebooks>> call, Throwable t) {
-                Log.i("400", "400" + t.getMessage());
+            public void onFailure(Call<List<NotebookModel>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void cargarADAPTER() {
-        if (BOX != null) {
-            arrayAdapter = new ArrayAdapter<>(this, R.layout.item , BOX);
-            listadoView.setAdapter(arrayAdapter);
-        }
     }
 }

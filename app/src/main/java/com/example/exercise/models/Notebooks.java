@@ -1,6 +1,16 @@
 package com.example.exercise.models;
 
 public class Notebooks {
+    private String title;
+    private String description;
+    private String image;
+
+    public Notebooks(String title, String description, String image) {
+        this.title = title;
+        this.description = description;
+        this.image = image;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -24,10 +34,5 @@ public class Notebooks {
     public void setImage(String image) {
         this.image = image;
     }
-
-    private String title;
-    private String description;
-    private String image;
-
 
 }

@@ -4,11 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.exercise.interfaces.Service;
 import com.example.exercise.models.Notebooks;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -18,17 +24,25 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-    // CREAR METODO QUE CONSULTE EL API
     // CREAR EL LIST VIEW PERSONALIZADO
     // LLENAR LISTVIEW CON LOS DATOS DEL GET
     // ABRIR FRAGMENT CUANDO SE SELECCIONE UN ELEMENTO
     Retrofit retrofit;
-    Button button;
+    TextView tv_Title;
+    TextView tv_SubTitle;
+    ImageView iv_Img;
+    ListView listadoView;
+    ArrayList<String> itemNames;
+    ArrayList<String> itemDesc;
+    ArrayList<String> itemImgs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        button = (Button) findViewById(R.id.btn1);
+        listadoView = (ListView) findViewById(R.id.lv_listadoView);
+        tv_Title = (TextView) findViewById(R.id.tv_title);
+        tv_SubTitle = (TextView) findViewById(R.id.tv_SubTitle);
+        iv_Img = (ImageView) findViewById(R.id.iv_Img);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://private-f0eea-mobilegllatam.apiary-mock.com/")
@@ -36,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         ObtainData();
+
+        //CARGO EJEMPLO DE LIST VIEW
+
+
     }
 
     private void ObtainData() {
@@ -44,23 +62,36 @@ public class MainActivity extends AppCompatActivity {
         listado.enqueue(new Callback<List<Notebooks>>() {
             @Override
             public void onResponse(Call<List<Notebooks>> call, Response<List<Notebooks>> response) {
-                Log.i("200","200");
+                Log.i("200", "200");
                 List<Notebooks> listado = response.body();
-
+                itemNames = new ArrayList<>();
+                itemDesc = new ArrayList<>();
+                itemImgs = new ArrayList<>();
                 for (int i = 0; i < listado.size(); i++) {
                     String noteTitle = listado.get(i).getTitle();
                     String noteDesc = listado.get(i).getDescription();
                     String noteImg = listado.get(i).getImage();
 
-                    Log.i("ver", noteTitle+noteDesc+noteImg);
-                    }
+                    itemNames.add(noteTitle);
+                    itemDesc.add(noteDesc);
+                    itemImgs.add(noteImg);
+                    MyAdapter(itemImgs);
+                    Log.i("ver", noteTitle + " " + noteDesc + " " + noteImg);
+                }
+
             }
 
             @Override
             public void onFailure(Call<List<Notebooks>> call, Throwable t) {
-                Log.i("400","400"+t.getMessage());
+                Log.i("400", "400" + t.getMessage());
             }
         });
+    }
+
+    private void MyAdapter(ArrayList<String> example) {
+        ArrayAdapter<String> itemsAdapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, example);
+        listadoView.setAdapter(itemsAdapter);
     }
 
 }

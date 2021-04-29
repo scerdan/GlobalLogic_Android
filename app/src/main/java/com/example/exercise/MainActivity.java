@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
     ListView listadoView;
     ArrayList<String> itemNames;
     ArrayList<String> itemDesc;
-    ArrayList<String> itemImgs;
+    ArrayList<Integer> itemImgs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         ObtainData();
-
-        //CARGO EJEMPLO DE LIST VIEW
-
+        if (itemNames != null) {
+            MyAdapter(itemNames);
+        }
 
     }
 
@@ -67,15 +68,14 @@ public class MainActivity extends AppCompatActivity {
                 itemNames = new ArrayList<>();
                 itemDesc = new ArrayList<>();
                 itemImgs = new ArrayList<>();
-                for (int i = 0; i < listado.size(); i++) {
+                for (int i = 0; i < 30; i++) {
                     String noteTitle = listado.get(i).getTitle();
                     String noteDesc = listado.get(i).getDescription();
                     String noteImg = listado.get(i).getImage();
 
                     itemNames.add(noteTitle);
                     itemDesc.add(noteDesc);
-                    itemImgs.add(noteImg);
-                    MyAdapter(itemImgs);
+//                    itemImgs.add(noteImg);
                     Log.i("ver", noteTitle + " " + noteDesc + " " + noteImg);
                 }
 
@@ -88,10 +88,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void MyAdapter(ArrayList<String> example) {
-        ArrayAdapter<String> itemsAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, example);
-        listadoView.setAdapter(itemsAdapter);
+    private void MyAdapter(ArrayList<String> title) {
+//CARGO EJEMPLO DE LIST VIEW
+        MyAdapter adapter = new MyAdapter(this, title);
+        listadoView.setAdapter(adapter);
     }
 
 }

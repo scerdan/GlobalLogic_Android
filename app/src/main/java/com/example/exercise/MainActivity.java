@@ -1,14 +1,12 @@
 package com.example.exercise;
 
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.exercise.interfaces.Service;
 import com.example.exercise.models.NotebookModel;
@@ -26,8 +24,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
     ArrayList<NotebookModel> notebookModels = new ArrayList<>();
     private NotebookAdapter notebookAdapter;
-    private RecyclerView note_recyclerview;
-
+    RecyclerView note_recyclerview;
+    Fragment fragmentnew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

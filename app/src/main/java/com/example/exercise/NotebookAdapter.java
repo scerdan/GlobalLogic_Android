@@ -3,7 +3,7 @@ package com.example.exercise;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.exercise.models.NotebookModel;
@@ -28,7 +28,6 @@ public class NotebookAdapter extends RecyclerView.Adapter<NotebookAdapter.ViewHo
     private ArrayList<NotebookAdapter> NotebookAdapter = new ArrayList<>();
     private Context context;
 
-
     public NotebookAdapter(Context context, ArrayList<NotebookModel> notebookModels) {
         this.notebookModels = notebookModels;
         this.context = context;
@@ -43,21 +42,19 @@ public class NotebookAdapter extends RecyclerView.Adapter<NotebookAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull NotebookAdapter.ViewHolder viewHolder, int i) {
+
         final NotebookModel temp = notebookModels.get(i);
         viewHolder.title.setText(notebookModels.get(i).getTitle());
         viewHolder.desc.setText(notebookModels.get(i).getDescription());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("CLOK", "CLOK" + viewHolder.title.getText());
                 Intent intent = new Intent(context, SecondActivity.class);
-                intent.putExtra("imagename", temp.getImage());
+                intent.putExtra("imagname", temp.getImage());
                 intent.putExtra("titlename", temp.getTitle());
                 intent.putExtra("desname", temp.getDescription());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
-
-
             }
         });
         Picasso.get()
@@ -65,13 +62,25 @@ public class NotebookAdapter extends RecyclerView.Adapter<NotebookAdapter.ViewHo
                 .into(viewHolder.image, new Callback() {
                     @Override
                     public void onSuccess() {
-                        Log.i("200", "SUCCESS");
+                        Log.i("imgLOAD", "SUCCESS");
                     }
 
                     @Override
                     public void onError(Exception e) {
                         Log.i("400", "ERROR" + e);
                         Picasso.get().load("https://seoheronews.com/403%20error%20or%20forbidden.png").into(viewHolder.image);
+
+                        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(context, SecondActivity.class);
+                                intent.putExtra("imagname", "https://seoheronews.com/403%20error%20or%20forbidden.png");
+                                intent.putExtra("titlename", temp.getTitle());
+                                intent.putExtra("desname", temp.getDescription());
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                context.startActivity(intent);
+                            }
+                        });
                     }
                 });
     }

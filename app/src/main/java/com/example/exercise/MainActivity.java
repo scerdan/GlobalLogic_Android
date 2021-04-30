@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<NotebookModel> notebookModels = new ArrayList<>();
     private NotebookAdapter notebookAdapter;
     RecyclerView note_recyclerview;
-    Fragment fragmentnew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

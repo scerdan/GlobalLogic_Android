@@ -25,8 +25,8 @@ import java.util.ArrayList;
 public class NotebookAdapter extends RecyclerView.Adapter<NotebookAdapter.ViewHolder> {
 
     private final ArrayList<NotebookModel> notebookModels;
-    private ArrayList<NotebookAdapter> NotebookAdapter = new ArrayList<>();
-    private Context context;
+    private final ArrayList<NotebookAdapter> NotebookAdapter = new ArrayList<>();
+    private final Context context;
 
     public NotebookAdapter(Context context, ArrayList<NotebookModel> notebookModels) {
         this.notebookModels = notebookModels;
@@ -46,17 +46,16 @@ public class NotebookAdapter extends RecyclerView.Adapter<NotebookAdapter.ViewHo
         final NotebookModel temp = notebookModels.get(i);
         viewHolder.title.setText(notebookModels.get(i).getTitle());
         viewHolder.desc.setText(notebookModels.get(i).getDescription());
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, SecondActivity.class);
-                intent.putExtra("imagname", temp.getImage());
-                intent.putExtra("titlename", temp.getTitle());
-                intent.putExtra("desname", temp.getDescription());
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
+        viewHolder.itemView.setOnClickListener(v -> {
+            //Second Activity Data
+            Intent intent = new Intent(context, SecondActivity.class);
+            intent.putExtra("imagname", temp.getImage());
+            intent.putExtra("titlename", temp.getTitle());
+            intent.putExtra("desname", temp.getDescription());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         });
+        //Imgs Management
         Picasso.get()
                 .load(notebookModels.get(i).getImage())
                 .into(viewHolder.image, new Callback() {

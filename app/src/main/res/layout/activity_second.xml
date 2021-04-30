@@ -35,7 +35,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center"
-                android:text="TextView" />
+                android:text="@string/textviewtitle"
+                android:textSize="30sp" />
         </TableRow>
 
         <TableRow
@@ -46,7 +47,8 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="@string/textviewDesc"
+                android:textSize="18sp" />
         </TableRow>
     </LinearLayout>
 

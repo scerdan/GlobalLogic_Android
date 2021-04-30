@@ -17,7 +17,8 @@
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:layout_margin="15dp"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/todo" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,7 +32,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp" />
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/principal"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/tv_SubTitle"

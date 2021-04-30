@@ -42,7 +42,12 @@ public class NotebookAdapter extends RecyclerView.Adapter<NotebookAdapter.ViewHo
     public void onBindViewHolder(@NonNull NotebookAdapter.ViewHolder viewHolder, int i) {
         viewHolder.title.setText(notebookModels.get(i).getTitle());
         viewHolder.desc.setText(notebookModels.get(i).getDescription());
-
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("CLOK","CLOK"+viewHolder.title.getText());
+            }
+        });
         Picasso.get()
                 .load(notebookModels.get(i).getImage())
                 .into(viewHolder.image, new Callback() {
@@ -65,7 +70,6 @@ public class NotebookAdapter extends RecyclerView.Adapter<NotebookAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView error;
         private final ImageView image;
         private final TextView title;
         private final TextView desc;
@@ -73,7 +77,6 @@ public class NotebookAdapter extends RecyclerView.Adapter<NotebookAdapter.ViewHo
         @SuppressLint("ResourceType")
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            error = (ImageView) itemView.findViewById(R.drawable.ic_launcher_background);
             image = (ImageView) itemView.findViewById(R.id.iv_Img);
             title = (TextView) itemView.findViewById(R.id.tv_title);
             desc = (TextView) itemView.findViewById(R.id.tv_SubTitle);

@@ -1,10 +1,13 @@
 package com.example.exercise;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.exercise.interfaces.Service;
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<NotebookModel> notebookModels = new ArrayList<>();
     private NotebookAdapter notebookAdapter;
     private RecyclerView note_recyclerview;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

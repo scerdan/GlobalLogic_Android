@@ -34,7 +34,9 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:textColor="@color/principal"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:maxLength="10"
+                />
 
             <TextView
                 android:id="@+id/tv_SubTitle"

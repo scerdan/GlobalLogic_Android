@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<NotebookModel>>() {
             @Override
             public void onResponse(Call<List<NotebookModel>> call, Response<List<NotebookModel>> response) {
+                assert response.body() != null;
                 notebookModels = new ArrayList<>(response.body());
                 notebookAdapter = new NotebookAdapter(MainActivity.this, notebookModels);
                 note_recyclerview.setAdapter(notebookAdapter);

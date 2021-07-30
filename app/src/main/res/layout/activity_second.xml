@@ -36,7 +36,9 @@
                 android:layout_height="50dp"
                 android:gravity="center"
                 android:text="@string/textviewtitle"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                android:maxLines="1"
+                />
         </TableRow>
 
         <TableRow
